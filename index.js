@@ -22,6 +22,8 @@ var search_text_bar = document.getElementById("navbar-search-input");
 
 
 //***                Functions             ***/
+
+//Modal Function
 function create_mod(event)
 {
 
@@ -39,6 +41,7 @@ function create_mod(event)
   }
 }
 
+//Writing tweets function
 function create_tweets(event)
 {
   //Checkers, if the text is filled or not
@@ -54,45 +57,87 @@ function create_tweets(event)
     return;
   }
 
-  var horn = document.createElement('i');
-  horn.classList.add('fa');
-  horn.classList.add('fa-bullhorn');
+  else
+  {
+    var horn = document.createElement('i');
+    horn.classList.add('fa');
+    horn.classList.add('fa-bullhorn');
 
-  var tweet_horn = document.createElement('div');
-  tweet_horn.classList.add('twit-icon');
-  tweet_horn.appendChild(horn);
+    var tweet_horn = document.createElement('div');
+    tweet_horn.classList.add('twit-icon');
+    tweet_horn.appendChild(horn);
 
-  var text = document.createElement('p');
-  text.classList.add('twit-text');
-  text.textContent = tweetText.value;
+    var text = document.createElement('p');
+    text.classList.add('twit-text');
+    text.textContent = tweetText.value;
 
-  var author = document.createElement('a');
-  author.href = '#';
-  author.textContent = tweetAuthor.value;
+    var author = document.createElement('a');
+    author.href = '#';
+    author.textContent = tweetAuthor.value;
 
-  var attribution = document.createElement('p');
-  attribution.classList.add('twit-attribution');
-  attribution.appendChild(author);
+    var attribution = document.createElement('p');
+    attribution.classList.add('twit-attribution');
+    attribution.appendChild(author);
 
-  var twit_content = document.createElement('div');
-  twit_content.classList.add("twit-content");
-  twit_content.appendChild(text);
-  twit_content.appendChild(attribution);
+    var twit_content = document.createElement('div');
+    twit_content.classList.add("twit-content");
+    twit_content.appendChild(text);
+    twit_content.appendChild(attribution);
 
-  var tweet = document.createElement('article');
-  tweet.classList.add('twit');
-  tweet.appendChild(tweet_horn);
-  tweet.appendChild(twit_content);
+    var tweet = document.createElement('article');
+    tweet.classList.add('twit');
+    tweet.appendChild(tweet_horn);
+    tweet.appendChild(twit_content);
 
-  var page = document.getElementsByClassName('twit-container')[0];
-  page.appendChild(tweet);
+    var page = document.getElementsByClassName('twit-container')[0];
+    page.appendChild(tweet);
 
-  create_mod();
+    create_mod();
+  }
 }
 
+//Search bar Function
 function search_function(event)
 {
+  var total_tweets = document.getElementsByClassName('twit');
 
+  for (i = 0; i < 8; i++)
+  {
+    if ((total_tweets[i].childNodes[3].childNodes[1].textContent.includes(search_text_bar.value)))
+    {
+      total_tweets[i].classList.remove('hidden');
+      continue;
+    }
+    else if ((total_tweets[i].childNodes[3].childNodes[3].textContent.includes(search_text_bar.value)))
+    {
+      total_tweets[i].classList.remove('hidden');
+      continue;
+    }
+    else
+    {
+      total_tweets[i].classList.add('hidden');
+    }
+  }
+
+  if (total_tweets.length > 8)
+  {
+    for (i = 8; i < total_tweets.length; i++)
+    {
+      if (total_tweets[i].childNodes[1].childNodes[0].textContent.includes(search_text_bar.value))
+      {
+        total_tweets[i].classList.remove('hidden');
+        continue;
+      }
+      else if (total_tweets[i].childNodes[1].childNodes[1].textContent.includes(search_text_bar.value))
+      {
+        total_tweets[i].classList.remove('hidden');
+        continue;
+      }
+      else {
+        total_tweets[i].classList.add('hidden');
+      }
+    }
+  }
 }
 
 //***           Applying Functions            ***//
@@ -106,3 +151,5 @@ mod_cancel.addEventListener('click', create_mod);
 mod_close.addEventListener('click', create_mod);
 
 //Search bar functions
+search_text_bar.addEventListener('keyup', search_function);
+search_button.addEventListener('click', search_function);
