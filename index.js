@@ -22,11 +22,53 @@ var search_text_bar = document.getElementById("navbar-search-input");
 
 
 //***                Functions             ***/
+//Search bar Function
+function search_function(event)
+{
+  var total_tweets = document.getElementsByClassName('twit');
+
+  for (i = 0; i < 8; i++)
+  {
+    if ((total_tweets[i].childNodes[3].childNodes[1].textContent.toLowerCase().includes(search_text_bar.value)))
+    {
+      total_tweets[i].classList.remove('hidden');
+      continue;
+    }
+    else if ((total_tweets[i].childNodes[3].childNodes[3].textContent.toLowerCase().includes(search_text_bar.value)))
+    {
+      total_tweets[i].classList.remove('hidden');
+      continue;
+    }
+    else
+    {
+      total_tweets[i].classList.add('hidden');
+    }
+  }
+
+  if (total_tweets.length > 8)
+  {
+    for (i = 8; i < total_tweets.length; i++)
+    {
+      if (total_tweets[i].childNodes[1].childNodes[0].textContent.toLowerCase().includes(search_text_bar.value))
+      {
+        total_tweets[i].classList.remove('hidden');
+        continue;
+      }
+      else if (total_tweets[i].childNodes[1].childNodes[1].textContent.toLowerCase().includes(search_text_bar.value))
+      {
+        total_tweets[i].classList.remove('hidden');
+        continue;
+      }
+      else {
+        total_tweets[i].classList.add('hidden');
+      }
+    }
+  }
+}
 
 //Modal Function
 function create_mod(event)
 {
-
   if(mod.classList.contains("hidden"))
   {
     mod.classList.remove('hidden');
@@ -44,7 +86,7 @@ function create_mod(event)
 //Writing tweets function
 function create_tweets(event)
 {
-  //Checkers, if the text is filled or not
+  //Checkers, if the tweet/author text box is filled or not
   if(tweetText.value == "")
   {
     alert("Warning: You have not entered your text in the twit you wanted to tweet on this here tweeter");
@@ -59,6 +101,7 @@ function create_tweets(event)
 
   else
   {
+    //Label and organize
     var horn = document.createElement('i');
     horn.classList.add('fa');
     horn.classList.add('fa-bullhorn');
@@ -92,57 +135,14 @@ function create_tweets(event)
     var page = document.getElementsByClassName('twit-container')[0];
     page.appendChild(tweet);
 
+    //reset the hidden values of modal
     create_mod();
-  }
-}
-
-//Search bar Function
-function search_function(event)
-{
-  var total_tweets = document.getElementsByClassName('twit');
-
-  for (i = 0; i < 8; i++)
-  {
-    if ((total_tweets[i].childNodes[3].childNodes[1].textContent.includes(search_text_bar.value)))
-    {
-      total_tweets[i].classList.remove('hidden');
-      continue;
-    }
-    else if ((total_tweets[i].childNodes[3].childNodes[3].textContent.includes(search_text_bar.value)))
-    {
-      total_tweets[i].classList.remove('hidden');
-      continue;
-    }
-    else
-    {
-      total_tweets[i].classList.add('hidden');
-    }
-  }
-
-  if (total_tweets.length > 8)
-  {
-    for (i = 8; i < total_tweets.length; i++)
-    {
-      if (total_tweets[i].childNodes[1].childNodes[0].textContent.includes(search_text_bar.value))
-      {
-        total_tweets[i].classList.remove('hidden');
-        continue;
-      }
-      else if (total_tweets[i].childNodes[1].childNodes[1].textContent.includes(search_text_bar.value))
-      {
-        total_tweets[i].classList.remove('hidden');
-        continue;
-      }
-      else {
-        total_tweets[i].classList.add('hidden');
-      }
-    }
   }
 }
 
 //***           Applying Functions            ***//
 
-//red horn button
+//twit button, creating tweet
 tweet_button.addEventListener('click', create_mod);
 
 //modal functions
